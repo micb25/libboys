@@ -42,10 +42,10 @@ function Boys_func(n, t) result(res)
                 if ( t .lt. eps ) then
                         res = 1d0
                 else
-                        res = dsqrt( pi / (4d0*t) ) * derf(dsqrt(t))
+                        res = dsqrt( Pi / (4d0*t) ) * derf(dsqrt(t))
                 end if
         else
-                if ( n .gt. libBoysMaxNu ) then
+                if ( n .gt. libBoysMaxN ) then
                         write(*,*) "libBoys error: not implemented!"
                         return
                 end if
@@ -57,7 +57,7 @@ function Boys_func(n, t) result(res)
                 if ( t .lt. eps ) then
                         res = 1d0 / ( 2d0*dble(n) + 1d0 )
                 else if ( t .gt. 30d0 ) then
-                        res = n_fac2_dble(2*n-1 +2) / 2d0**(n+1) * dsqrt(pi/t**(2*n+1))
+                        res = n_fac2_dble(2*n-1 +2) / 2d0**(n+1) * dsqrt(Pi/t**(2*n+1))
                 else
                         dti = dt
                         
