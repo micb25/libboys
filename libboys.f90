@@ -76,10 +76,9 @@ function Boys_func(n, t) result(res)
                                 end do
 
                         else if ( t .ge. 5d0 ) then
-                        
-                                j = int((t-4.95d0)*20d0) + 1
+                                j = int((t-4.975d0)*20d0) + 1
                                 dt = BoysFuncValuesM(j, 1) - t 
-                                
+
                                 res = BoysFuncValuesM(j, n + 2)
                                 do i = 1, 6
                                         sfac = BoysFuncValuesM(j, n + 2 + i) * dti / n_fac_dble(i)
@@ -91,8 +90,7 @@ function Boys_func(n, t) result(res)
                                 end do
 
                         else 
-                        
-                                j = int((t-0.0125d0)*40d0) + 1
+                                j = int(t*40d0+0.5d0) + 1
                                 dt = BoysFuncValuesS(j, 1) - t
                                 
                                 res = BoysFuncValuesS(j, n + 2)

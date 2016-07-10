@@ -19,16 +19,32 @@
 
 program boys_test
         implicit none
-	double precision :: Boys_func
-	integer :: n
-	double precision :: t, res
-
+        double precision :: Boys_func
+        integer :: n, io_error, nv
+        double precision :: t, res, tv, mv, deps
         
-        n = 5
-        t = 5.35d0
+        write(*,*) "-----------------------------------------------------------------------------------------------"
+        write(*,'(A5,4A22)') "N", "X", "calc. value", "ref. value", "diff"
+        write(*,*) "-----------------------------------------------------------------------------------------------"
         
-        res = Boys_func(n, t)
+        open(unit=20,file='benchmark.values',status='old',action='read',iostat=io_error)
+        if ( io_error .eq. 0 ) then
         
-        write(*,'(A,I1,A,F8.3,A,F16.8)') "F_", n, "(", t, ") = ", res
+                do
+                        read(20,*,iostat=io_error) nv, tv, mv
+                        if ( io_error .ne. 0 ) then
+                                exit
+                        end if
+                        
+                        res = Boys_func(nv, tv)
+                        write(*,'(I5,4F22.16)') nv, tv, res, mv, res-mv
+                end do
+        else
+                write(*,*) "Error! Can't open 'benchmark.values'!"
+        end if
         
+        close(unit=20)
+        
+        write(*,*) "-----------------------------------------------------------------------------------------------"
+                
 end program
