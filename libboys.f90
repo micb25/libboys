@@ -59,12 +59,11 @@ function Boys_func(n, t) result(res)
                 else if ( t .gt. 30d0 ) then
                         res = n_fac2_dble(2*n-1 +2) / 2d0**(n+1) * dsqrt(Pi/t**(2*n+1))
                 else
-                        dti = dt
                         
                         if ( t .ge. 10d0 ) then
                                 j = int((t-9.95d0)*10d0) + 1
                                 dt = BoysFuncValuesL(j, 1) - t 
-                                
+                                dti = dt
                                 res = BoysFuncValuesL(j, n + 2)
                                 do i = 1, 6
                                         sfac = BoysFuncValuesL(j, n + 2 + i) * dti / n_fac_dble(i)
@@ -78,7 +77,7 @@ function Boys_func(n, t) result(res)
                         else if ( t .ge. 5d0 ) then
                                 j = int((t-4.975d0)*20d0) + 1
                                 dt = BoysFuncValuesM(j, 1) - t 
-
+                                dti = dt
                                 res = BoysFuncValuesM(j, n + 2)
                                 do i = 1, 6
                                         sfac = BoysFuncValuesM(j, n + 2 + i) * dti / n_fac_dble(i)
@@ -92,7 +91,7 @@ function Boys_func(n, t) result(res)
                         else 
                                 j = int(t*40d0+0.5d0) + 1
                                 dt = BoysFuncValuesS(j, 1) - t
-                                
+                                dti = dt
                                 res = BoysFuncValuesS(j, n + 2)
                                 do i = 1, 6
                                         sfac = BoysFuncValuesS(j, n + 2 + i) * dti / n_fac_dble(i)
