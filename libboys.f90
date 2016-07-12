@@ -1,5 +1,5 @@
 !
-! libBoys - a FORTRAN library to numerically calculate the Boys function
+! libboys - a FORTRAN library to numerically calculate the Boys function
 ! Copyright (C) 2014-2016 Michael Böhme <boehme.mic@gmail.com>
 !
 ! This program is free software; you can redistribute it and/or
@@ -33,7 +33,7 @@ function Boys_func(n, t) result(res)
                 1d0, 1d0, 1d0, 2d0, 3d0, 8d0, 15d0, 48d0, 105d0, 384d0, 945d0, 3840d0, &
                 10395d0,46080d0,135135d0,645120d0,2027025d0,10321920d0,34459425d0,185794560d0,654729075d0,3715891200d0,13749310575d0,81749606400d0, &
                 316234143225d0,1961990553600d0,7905853580625d0,51011754393600d0,213458046676875d0,1428329123020800d0,6190283353629375d0 /)
-        double precision, parameter :: Pi = 3.14159265359d0
+        double precision, parameter :: Pi = 3.1415926535897932d0 
         double precision, parameter :: eps = 1d-12
 !
         res = 0d0
@@ -46,11 +46,11 @@ function Boys_func(n, t) result(res)
                 end if
         else
                 if ( n .gt. libBoysMaxN ) then
-                        write(*,*) "libBoys error: not implemented!"
+                        write(*,*) "libboys error: not implemented!"
                         return
                 end if
                 if ( n .lt. 0 ) then
-                        write(*,*) "libBoys error: n < 0!"
+                        write(*,*) "libboys error: n < 0!"
                         return
                 end if
                 
