@@ -35,6 +35,7 @@ function Boys_func(n, t) result(res)
                 316234143225d0,1961990553600d0,7905853580625d0,51011754393600d0,213458046676875d0,1428329123020800d0,6190283353629375d0 /)
         double precision, parameter :: Pi = 3.1415926535897932d0 
         double precision, parameter :: eps = 1d-12
+        double precision :: epsrel
 !
         res = 0d0
         
@@ -65,10 +66,11 @@ function Boys_func(n, t) result(res)
                                 dt = BoysFuncValuesL(j, 1) - t 
                                 dti = dt
                                 res = BoysFuncValuesL(j, n + 2)
+                                epsrel = res * eps
                                 do i = 1, 6
                                         sfac = BoysFuncValuesL(j, n + 2 + i) * dti / n_fac_dble(i)
                                         res = res + sfac
-                                        if ( abs(sfac) .lt. eps ) then
+                                        if ( abs(sfac) .lt. epsrel ) then
                                                 return
                                         end if
                                         dti = dti * dt
@@ -79,10 +81,11 @@ function Boys_func(n, t) result(res)
                                 dt = BoysFuncValuesM(j, 1) - t 
                                 dti = dt
                                 res = BoysFuncValuesM(j, n + 2)
+                                epsrel = res * eps
                                 do i = 1, 6
                                         sfac = BoysFuncValuesM(j, n + 2 + i) * dti / n_fac_dble(i)
                                         res = res + sfac
-                                        if ( abs(sfac) .lt. eps ) then
+                                        if ( abs(sfac) .lt. epsrel ) then
                                                 return
                                         end if
                                         dti = dti * dt
@@ -93,10 +96,11 @@ function Boys_func(n, t) result(res)
                                 dt = BoysFuncValuesS(j, 1) - t
                                 dti = dt
                                 res = BoysFuncValuesS(j, n + 2)
+                                epsrel = res * eps
                                 do i = 1, 6
                                         sfac = BoysFuncValuesS(j, n + 2 + i) * dti / n_fac_dble(i)
                                         res = res + sfac
-                                        if ( abs(sfac) .lt. eps ) then
+                                        if ( abs(sfac) .lt. epsrel ) then
                                                 return
                                         end if
                                         dti = dti * dt
