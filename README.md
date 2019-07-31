@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/github/license/micb25/libboys.svg)](LICENSE)
+[![Issues](https://img.shields.io/github/issues/micb25/libboys.svg)](https://github.com/micb25/libboys/issues)
+
 libboys
 =======
 
