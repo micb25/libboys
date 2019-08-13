@@ -1,4 +1,3 @@
-gfortran  -m64 -cpp -ffixed-line-length-none -ffree-line-length-none -fdefault-integer-8 -finit-local-zero -Ofast -mtune=native -march=native -ffast-math -march=native -mfpmath=sse -msse2 -ffast-math -g  boys_test.f90 -o boys_test -L../ -lboys
  ---------------------------------------------------------------------------------------------------------------------
     N                     X      calculated value       reference value            difference       rel. difference
  ---------------------------------------------------------------------------------------------------------------------
