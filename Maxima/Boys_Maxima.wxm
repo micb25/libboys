@@ -1,0 +1,15 @@
+fpprec: 20;
+ratprint: false$
+
+Boys(n, x):=integrate((t^(2.0*n))*exp(-x*(t^2.0)), t, 0, 1);
+
+for x:10.0 thru 50.1 step 0.1 do
+block(
+    printf(true, "                (/ ~6,1fd0, ", x),
+    for n: 0 thru 22 step 1 do
+    block(
+        if n < 22 then printf(true, "~23,16,2,e, ", Boys(n, x)) else printf(true, "~23,16,2,e ", Boys(n, x))
+    ),
+    printf(true, "/), &~%")
+);
+

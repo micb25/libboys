@@ -34,7 +34,7 @@ function Boys_func(n, t) result(res)
                 10395d0,46080d0,135135d0,645120d0,2027025d0,10321920d0,34459425d0,185794560d0,654729075d0,3715891200d0,13749310575d0,81749606400d0, &
                 316234143225d0,1961990553600d0,7905853580625d0,51011754393600d0,213458046676875d0,1428329123020800d0,6190283353629375d0 /)
         double precision, parameter :: Pi = 3.1415926535897932d0 
-        double precision, parameter :: eps = 1d-12
+        double precision, parameter :: eps = 1d-14
         double precision :: epsrel
 !
         res = 0d0
@@ -57,7 +57,7 @@ function Boys_func(n, t) result(res)
                 
                 if ( t .lt. eps ) then
                         res = 1d0 / ( 2d0*dble(n) + 1d0 )
-                else if ( t .gt. 30d0 ) then
+                else if ( t .gt. 50d0 ) then
                         res = n_fac2_dble(2*n-1 +2) / 2d0**(n+1) * dsqrt(Pi/t**(2*n+1))
                 else
                         
