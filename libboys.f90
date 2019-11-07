@@ -18,15 +18,15 @@
 !
 
 ! ***************************************************************************************
-! * Boys function F_n(t)
+! * Boys function F_n(x)
 ! ***************************************************************************************
-function Boys_func(n, t) result(res)
+function Boys_func(n, x) result(res)
         use libboys_data
         implicit none
 !
         integer, intent(in) :: n
-        double precision, intent(in) :: t
-        double precision :: res, sfac, dt, dti
+        double precision, intent(in) :: x
+        double precision :: res, sfac, dx, dxi
         integer :: i, j
         double precision, dimension(6) :: n_fac_dble = (/ 1d0, 2d0, 6d0, 24d0, 120d0, 720d0 /)
         double precision, dimension(31) :: n_fac2_dble = (/ &
@@ -35,15 +35,16 @@ function Boys_func(n, t) result(res)
                 316234143225d0,1961990553600d0,7905853580625d0,51011754393600d0,213458046676875d0,1428329123020800d0,6190283353629375d0 /)
         double precision, parameter :: Pi = 3.1415926535897932d0 
         double precision, parameter :: eps = 1d-14
+        integer, parameter :: MAX_RECURSION = 6
         double precision :: epsrel
 !
         res = 0d0
         
         if ( n .eq. 0 ) then
-                if ( t .lt. eps ) then
+                if ( x .lt. eps ) then
                         res = 1d0
                 else
-                        res = dsqrt( Pi / (4d0*t) ) * derf(dsqrt(t))
+                        res = dsqrt( Pi / (4d0*x) ) * derf(dsqrt(x))
                 end if
         else
                 if ( n .gt. libBoysMaxN ) then
@@ -55,55 +56,55 @@ function Boys_func(n, t) result(res)
                         return
                 end if
                 
-                if ( t .lt. eps ) then
+                if ( x .lt. eps ) then
                         res = 1d0 / ( 2d0*dble(n) + 1d0 )
-                else if ( t .gt. 50d0 ) then
-                        res = n_fac2_dble(2*n-1 +2) / 2d0**(n+1) * dsqrt(Pi/t**(2*n+1))
+                else if ( x .gt. 50d0 ) then
+                        res = n_fac2_dble(2*n-1 +2) / 2d0**(n+1) * dsqrt(Pi/x**(2*n+1))
                 else
                         
-                        if ( t .ge. 10d0 ) then
-                                j = int((t-9.95d0)*10d0) + 1
-                                dt = BoysFuncValuesL(j, 1) - t 
-                                dti = dt
+                        if ( x .ge. 10d0 ) then
+                                j = int((x-9.95d0)*10d0) + 1
+                                dx = BoysFuncValuesL(j, 1) - x 
+                                dxi = dx
                                 res = BoysFuncValuesL(j, n + 2)
                                 epsrel = res * eps
-                                do i = 1, 6
-                                        sfac = BoysFuncValuesL(j, n + 2 + i) * dti / n_fac_dble(i)
+                                do i = 1, MAX_RECURSION
+                                        sfac = BoysFuncValuesL(j, n + 2 + i) * dxi / n_fac_dble(i)
                                         res = res + sfac
                                         if ( abs(sfac) .lt. epsrel ) then
                                                 return
                                         end if
-                                        dti = dti * dt
+                                        dxi = dxi * dx
                                 end do
 
-                        else if ( t .ge. 5d0 ) then
-                                j = int((t-4.975d0)*20d0) + 1
-                                dt = BoysFuncValuesM(j, 1) - t 
-                                dti = dt
+                        else if ( x .ge. 5d0 ) then
+                                j = int((x-4.975d0)*20d0) + 1
+                                dx = BoysFuncValuesM(j, 1) - x 
+                                dxi = dx
                                 res = BoysFuncValuesM(j, n + 2)
                                 epsrel = res * eps
-                                do i = 1, 6
-                                        sfac = BoysFuncValuesM(j, n + 2 + i) * dti / n_fac_dble(i)
+                                do i = 1, MAX_RECURSION
+                                        sfac = BoysFuncValuesM(j, n + 2 + i) * dxi / n_fac_dble(i)
                                         res = res + sfac
                                         if ( abs(sfac) .lt. epsrel ) then
                                                 return
                                         end if
-                                        dti = dti * dt
+                                        dxi = dxi * dx
                                 end do
 
                         else 
-                                j = int(t*40d0+0.5d0) + 1
-                                dt = BoysFuncValuesS(j, 1) - t
-                                dti = dt
+                                j = int(x*40d0+0.5d0) + 1
+                                dx = BoysFuncValuesS(j, 1) - x
+                                dxi = dx
                                 res = BoysFuncValuesS(j, n + 2)
                                 epsrel = res * eps
-                                do i = 1, 6
-                                        sfac = BoysFuncValuesS(j, n + 2 + i) * dti / n_fac_dble(i)
+                                do i = 1, MAX_RECURSION
+                                        sfac = BoysFuncValuesS(j, n + 2 + i) * dxi / n_fac_dble(i)
                                         res = res + sfac
                                         if ( abs(sfac) .lt. epsrel ) then
                                                 return
                                         end if
-                                        dti = dti * dt
+                                        dxi = dxi * dx
                                 end do
 
                         end if
